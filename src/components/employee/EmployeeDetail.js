@@ -10,7 +10,7 @@ export const EmployeeDetail = (props) => {
     const { locations, getLocations } = useContext(LocationContext)
     const { employees, getEmployees } = useContext(EmployeeContext)
 
-    const [animal, setAnimal] = useState({})
+    const [locationAnimals, setAnimals] = useState([])
     const [employee, setEmployee] = useState({})
     const [location, setLocation] = useState({})
 
@@ -21,9 +21,9 @@ export const EmployeeDetail = (props) => {
     }, [])
 
     useEffect(() => {
-        const animal = animals.find(a => a.id === employee.animalId) || {}
-        setAnimal(animal)
-    }, [animals])
+        const locAnimals = animals.filter(a => a.locationId === location.id) || []
+        setAnimals(locAnimals)
+    }, [animals, location])
 
     useEffect(() => {
         const employee = employees.find(e => e.id === parseInt(props.match.params.employeeId)) || {}
@@ -33,18 +33,15 @@ export const EmployeeDetail = (props) => {
     useEffect(() => {
         const location = locations.find(l => l.id === employee.locationId) || {}
         setLocation(location)
-    }, [locations])
+    }, [employee])
 
     return (
         <section className="employee">
             <h3 className="employee__name">{employee.name}</h3>
             <div>Currently working at { location.name }</div>
             <div>
-                {
-                (employee.animalId === null)
-                    ? "Not assigned to an animal"
-                    : `Currently taking care of ${animal.name}`
-                }
+                Animals at this location:
+                {locationAnimals.map(la => <div>{la.name}</div>)}
             </div>
         </section>
     )

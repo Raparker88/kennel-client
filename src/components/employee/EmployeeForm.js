@@ -19,13 +19,14 @@ export const EmployeeForm = (burrito) => {
     */
     const name = useRef(null)
     const location = useRef(null)
-    const animal = useRef(null)
+    const address = useRef(null)
+    // const animal = useRef(null)
 
     /*
         Get animal state and location state on initialization.
     */
     useEffect(() => {
-       getAnimals().then(getLocations)
+       getLocations()
     }, [])
 
     const constructNewEmployee = () => {
@@ -36,7 +37,7 @@ export const EmployeeForm = (burrito) => {
             but rather `.current.value` now in React.
         */
         const locationId = parseInt(location.current.value)
-        const animalId = parseInt(animal.current.value)
+        // const animalId = parseInt(animal.current.value)
 
         if (locationId === 0) {
             window.alert("Please select a location")
@@ -44,7 +45,7 @@ export const EmployeeForm = (burrito) => {
             addEmployee({
                 name: name.current.value,
                 locationId,
-                animalId
+                address: address.current.value
             })
             .then(() => burrito.history.push("/employees"))
         }
@@ -74,6 +75,12 @@ export const EmployeeForm = (burrito) => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
+                    <label htmlFor="employeeAddress">Employee address: </label>
+                    <input type="text" id="employeeAddress" ref={address} required autoFocus className="form-control" placeholder="Employee address" />
+                </div>
+            </fieldset>
+            {/* <fieldset>
+                <div className="form-group">
                     <label htmlFor="location">Caretaker for: </label>
                     <select defaultValue="" name="animal" ref={animal} id="employeeAnimal" className="form-control" >
                         <option value="0">Select an animal</option>
@@ -84,7 +91,7 @@ export const EmployeeForm = (burrito) => {
                         ))}
                     </select>
                 </div>
-            </fieldset>
+            </fieldset> */}
             <button type="submit"
                 onClick={evt => {
                     evt.preventDefault() // Prevent browser from submitting the form
