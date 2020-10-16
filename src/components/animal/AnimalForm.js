@@ -59,7 +59,6 @@ export const AnimalForm = (props) => {
         } else {
             if (editMode) {
                 // PUT
-                console.log(animal)
                 updateAnimal({
                     id: animal.id,
                     name: animal.name,
@@ -75,7 +74,7 @@ export const AnimalForm = (props) => {
                     name: animal.name,
                     breed: animal.breed,
                     locationId: locationId,
-                    treatment: animal.treatment,
+                    status: animal.status,
                     customerId: parseInt(localStorage.getItem("kennel_customer"))
                 })
                     .then(() => props.history.push("/animals"))
@@ -125,10 +124,10 @@ export const AnimalForm = (props) => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="status">Treatments: </label>
-                    <textarea type="text" name="status" className="form-control"
+                    <input type="text" name="status" className="form-control"
                         value={animal.status}
                         onChange={handleControlledInputChange}>
-                    </textarea>
+                    </input>
                 </div>
             </fieldset>
             <button type="submit"
